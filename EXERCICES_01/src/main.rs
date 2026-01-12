@@ -1,12 +1,20 @@
 fn main() {
     // println!("Hello, world!");
-    exercise_variables_and_mutability();
-    exercise_ownership_and_borrowing();
-    process_sensor_data(vec![
-        ("sensor_1", vec![22.5, 23.0, 22.8, -60.0, 23.3]),
-        ("sensor_2", vec![18.0, 19.5, 18.7, 20.0, 19.2]),
-        ("sensor_3", vec![25.0, 24.8, 25.2, 25.1, 24.9]),
-    ]);
+    // exercise_variables_and_mutability();
+    // exercise_ownership_and_borrowing();
+    // process_sensor_data(vec![
+    //     ("sensor_1", vec![22.5, 23.0, 22.8, -60.0, 23.3]),
+    //     ("sensor_2", vec![18.0, 19.5, 18.7, 20.0, 19.2]),
+    //     ("sensor_3", vec![25.0, 24.8, 25.2, 25.1, 24.9]),
+    // ]);
+    let mut inventory: Vec<(&str, u32)> = vec![
+        ("apple", 10),
+        ("banana", 5),
+        ("orange", 8),
+        ("pear", 2),
+    ];
+    process_order( "apple", 20, &mut inventory);
+    generate_restock_report(&inventory);
 }
 
 
@@ -145,4 +153,86 @@ fn process_sensor_data(sensor_data: Vec<(&str, Vec<f64>)>) {
         "Sensor with highest average temperature: {} ({:.2} F)",
         sensor_with_highest_avg, highest_avg_temp
     );
+}
+
+// Exercise 4: Order Fulfillment System
+// Goal: Simulate an order fulfillment system for a small store using vectors and basic
+// control flow.
+// Scenario:
+// You are tasked with managing product inventory and processing customer orders. The
+// system should:
+// 1. Track the quantity of each product in stock (using a vector of tuples: (&str, u32)).
+// 2. Process orders by reducing the stock quantity if available.
+// 3. Handle cases where the ordered quantity exceeds the available stock.
+// 4. Generate a report of products that need restocking (quantity < 3).
+// Data:
+// Use the following initial inventory:
+// let mut inventory: Vec<(&str, u32)> = vec![
+// ("apple", 10),
+// ("banana", 5),
+// ("orange", 8),
+// ("pear", 2),
+// ];
+
+// Instructions:
+// 1. Define a function process_order that takes a product name, ordered quantity,
+// and inventory (as &mut Vec<(&str, u32)>):
+// o If the product exists and the ordered quantity is available, reduce the
+// stock.
+// o If the product does not exist or the quantity is insufficient, print an error
+// message.
+// 2. Define a function generate_restock_report that returns a vector of product names
+// with quantities below 3.
+// 3. Process the following orders:
+// o Order 4 apples.
+// o Order 6 bananas.
+// o Order 3 oranges.
+// o Order 2 pears.
+// 4. Print the updated inventory and the restock report.
+// Hints:
+//  Use a loop to iterate over the inventory and find the product by name.
+//  Use pattern matching or conditionals to handle stock updates and errors.
+//  Use a mutable vector to update inventory quantities.
+//  Use a loop to generate the restock report.
+
+fn process_order(
+    product_name: &str,
+    ordered_quantity: u32,
+    inventory: &mut Vec<(&str, u32)>,
+) {
+    for (name, quantity) in inventory.iter_mut() {
+        if *name == product_name {
+            if *quantity >= ordered_quantity {
+                *quantity -= ordered_quantity;
+                println!(
+                    "Order processed: {} x {}. Remaining stock: {}",
+                    ordered_quantity, product_name, *quantity
+                );
+            } else {
+                println!(
+                    "Error: Insufficient stock for {}. Available: {}, Ordered: {}",
+                    product_name, *quantity, ordered_quantity
+                );
+            }
+            return;
+        }
+    }
+    println!("Error: Product {} not found in inventory.", product_name);
+}
+
+fn generate_restock_report(inventory: &Vec<(&str, u32)>) {
+    let restock_items: Vec<&str> = inventory
+        .iter()
+        .filter(|&&(_, quantity)| quantity < 3)
+        .map(|&(name, _)| name)
+        .collect();
+
+    if restock_items.is_empty() {
+        println!("All products are sufficiently stocked.");
+    } else {
+        println!("Products that need restocking:");
+        for item in restock_items {
+            println!("- {}", item);
+        }
+    }
 }
