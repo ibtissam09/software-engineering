@@ -2,7 +2,13 @@ fn main() {
     // println!("Hello, world!");
     exercise_variables_and_mutability();
     exercise_ownership_and_borrowing();
+    process_sensor_data(vec![
+        ("sensor_1", vec![22.5, 23.0, 22.8, -60.0, 23.3]),
+        ("sensor_2", vec![18.0, 19.5, 18.7, 20.0, 19.2]),
+        ("sensor_3", vec![25.0, 24.8, 25.2, 25.1, 24.9]),
+    ]);
 }
+
 
 // Exercise 1: Variables and Mutability
 // Goal: Practice declaring immutable and mutable variables, and understand their scope. 
@@ -52,4 +58,91 @@ fn exercise_ownership_and_borrowing() {
     // println!("s1: {}", s1); // This will not compile because s1 is no longer valid
 
     print_string(&s2);
+}
+
+// Exercise 3: Data Processing Pipeline
+// Goal: Implement a data processing pipeline that filters, transforms, and aggregates data
+// using Rust’s core concepts.
+// Scenario:
+// You are given a dataset of temperature readings (in Celsius) from multiple sensors over a
+// 24-hour period. Your task is to:
+// 1. Filter out invalid readings (values below -50°C or above 60°C).
+// 2. Convert valid readings from Celsius to Fahrenheit.
+// 3. Calculate the average temperature for each sensor.
+// 4. Identify the sensor with the highest average temperature.
+// Data:
+// Use the following dataset (simulated as a vector of tuples):
+// let sensor_data: Vec<(&str, Vec<f64>)> = vec![
+// ("sensor_1", vec![22.5, 23.0, 22.8, -60.0, 23.3]),
+// ("sensor_2", vec![18.0, 19.5, 18.7, 20.0, 19.2]),
+// ("sensor_3", vec![25.0, 24.8, 25.2, 25.1, 24.9]),
+// ];
+// Instructions:
+// 1. Define a function filter_invalid_readings that takes a vector of f64 and returns a
+// new vector with only valid readings.
+// 2. Define a function ahrenh_to_fahrenheit that converts a Celsius value to
+// Fahrenheit.
+// 3. Define a function calculate_average that calculates the average of a vector of f64.
+// 4. Define a function process_sensor_data that:
+// o Filters invalid readings for each sensor.
+// o Converts valid readings to Fahrenheit.
+// 1. F = (C × 9/5) + 32
+// o Calculates the average temperature for each sensor.
+// o Returns the sensor name with the highest average temperature.
+// 5. Print the results for each sensor and the sensor with the highest average
+// temperature.
+// Hints:
+//  Use filter and map to process the data.
+//  Use a match expression or if statements to filter invalid readings.
+//  Use a loop or iterator to calculate the average for each sensor.
+//  Use a struct or tuple to store intermediate results (e.g., sensor name and average
+// temperature).
+// Expected Outcome:
+//  Students should print the average temperature for each sensor in Fahrenheit.
+//  Students should identify and print the sensor with the highest average
+// temperature.
+
+fn filter_invalid_readings(readings: &Vec<f64>) -> Vec<f64> {
+    readings
+        .iter()
+        .cloned()
+        .filter(|&temp| temp >= -50.0 && temp <= 60.0)
+        .collect()
+}
+fn celsius_to_fahrenheit(celsius: f64) -> f64 {
+    (celsius * 9.0 / 5.0) + 32.0
+}
+
+fn calculate_average(readings: &Vec<f64>) -> f64 {
+    let sum: f64 = readings.iter().sum();
+    sum / readings.len() as f64
+}
+
+fn process_sensor_data(sensor_data: Vec<(&str, Vec<f64>)>) {
+    let mut highest_avg_temp = std::f64::MIN;
+    let mut sensor_with_highest_avg = "";
+
+    for (sensor_name, readings) in sensor_data {
+        let valid_readings = filter_invalid_readings(&readings);
+        let fahrenheit_readings: Vec<f64> = valid_readings
+            .iter()
+            .map(|&temp| celsius_to_fahrenheit(temp))
+            .collect();
+        let average_temp = calculate_average(&fahrenheit_readings);
+
+        println!(
+            "Sensor: {}, Average Temperature (F): {:.2}",
+            sensor_name, average_temp
+        );
+
+        if average_temp > highest_avg_temp {
+            highest_avg_temp = average_temp;
+            sensor_with_highest_avg = sensor_name;
+        }
+    }
+
+    println!(
+        "Sensor with highest average temperature: {} ({:.2} F)",
+        sensor_with_highest_avg, highest_avg_temp
+    );
 }
