@@ -1,7 +1,8 @@
 fn main() {
     println!("Hello, world!");
-    loops_example();
-    loop_control();
+    //loops_example();
+    //loop_control();
+    string_example();
 }
 
 fn loops_example() {
@@ -38,5 +39,17 @@ fn loop_control(){
             break; // Exit loop if i is greater than 7
         }
         println!("Odd number less than or equal to 7: {}", i);
-    }   
+    }  
+    // Outer and inner loop with labels
+    
 }
+
+fn string_example() {
+    let sample_str = String::from("Hello, Rust!");
+    for c in sample_str.chars() {
+        println!("{}", c);
+    }
+}
+
+
+// Pointers and References
