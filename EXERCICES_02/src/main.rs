@@ -66,6 +66,19 @@ impl Product {
 }
 
 
+// Exercise 3: Generics
+// Objective: Use generic types to create a flexible function. 
+// Task: Write a generic function swap that swaps the values of two variables of the same 
+// type. 
+// Requirements:
+// • Use generic type parameters. Method/Function Information:
+// • Use a tuple to return the swapped values.
+
+fn swap<T>(a: T, b: T) -> (T, T) {
+    (b, a)
+}
+
+
 
 
 fn main() {
@@ -77,9 +90,23 @@ fn main() {
     // println!("Longest common suffix between '{}' and '{}' is '{}'", "Runner", "Manner", suffix);  
 
     // Test the Product struct and apply_discount method : Exercice 2
+    /*
     let mut product = Product::new("Laptop", 1500.0, 10);
     println!("Original price of {}: ${}", product.name, product.price);
     product.apply_discount(0.1); // Apply a 10% discount
     println!("Price of {} after discount: ${}", product.name, product.price);
-          
+    */
+    // Test the swap function : Exercice 3
+    let x = 10;
+    let y = 20;
+
+    let (new_x, new_y) = swap(x, y);
+    println!("new_x = {}, new_y = {}", new_x, new_y);
+
+    let a = "hello";
+    let b = "world";
+
+    let (new_a, new_b) = swap(a, b);
+    println!("new_a = {}, new_b = {}", new_a, new_b);
+
 }
