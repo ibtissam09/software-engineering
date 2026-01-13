@@ -96,6 +96,22 @@ fn find_index(vec: &Vec<i32>, target: i32) -> Option<usize> {
     None
 }
 
+/// Exercise 5: Result
+/// Objective: Practice error handling with Result. 
+/// Task: Write a function safe_sqrt that takes a f64 and returns the square root as Ok(f64) if 
+/// the input is non-negative, otherwise return an Err(String). 
+/// Requirements:
+/// • Use Result<f64, String> as the return type. Method/Function Information:
+/// • Use f64::sqrt() to compute the square root.
+/// • Return Err with a message if the input is negative
+
+fn safe_sqrt(x: f64) -> Result<f64, String> {
+    if x < 0.0 {
+        Err("Input must be a non-negative number".to_string())
+    } else {
+        Ok(x.sqrt())
+    }
+}
 
 fn main() {
     println!("Hello, world!");
@@ -127,11 +143,19 @@ fn main() {
     println!("new_a = {}, new_b = {}", new_a, new_b);
     */
     // Test the find_index function : Exercice 4
-
-    let numbers = vec![10, 20, 30, 40, 50, 60];
-    let target = 60;
-    match find_index(&numbers, target) {
-        Some(index) => println!("Found {} at index {}", target, index),
-        None => println!("{} not found in the vector", target),
+    
+    // let numbers = vec![10, 20, 30, 40, 50, 60];
+    // let target = 60;
+    // match find_index(&numbers, target) {
+    //     Some(index) => println!("Found {} at index {}", target, index),
+    //     None => println!("{} not found in the vector", target),
+    // }
+    // Test the safe_sqrt function : Exercice 5
+    
+    let number = 9.0;
+    match safe_sqrt(number) {
+        Ok(result) => println!("The square root of {} is {}", number, result),
+        Err(e) => println!("Error: {}", e), 
     }
+    
 }   
