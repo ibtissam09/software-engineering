@@ -2,8 +2,32 @@ fn main() {
     println!("Hello, world!");
     //loops_example();
     //loop_control();
-    string_example();
+    //string_example();
+    data_types();
 }
+
+// Data Types and Variables
+fn data_types() {
+    //Scalar types
+    let a: u8 = 255;
+    let b: i8 = -128;
+    let c: f64 = 7.3;
+    let d: bool = true;
+    let e: char = 'Z';
+
+    //Compound types
+    let tuple: (i32, f32, u8) = (42, 7.3, 1);
+    let array: [i32; 5] = [1, 2, 3, 4, 5];
+    let vec: Vec<i32> = vec![1, 2, 3];
+    let string = String::from("hello");
+    let slice: &str = "world";
+
+    println!(
+        "Tuple: {:?}, Array: {:?}, Vector: {:?}, String: {}, Slice: {}",
+        tuple, array, vec, string, slice
+    );
+}
+
 
 fn loops_example() {
     let mut count: i32 = 0;
