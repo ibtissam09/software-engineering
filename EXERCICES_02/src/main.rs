@@ -78,7 +78,23 @@ fn swap<T>(a: T, b: T) -> (T, T) {
     (b, a)
 }
 
+// Exercise 4: Option
+// Objective: Practice handling optional values. 
+// Task: Write a function find_index that takes a vector of integers and a target value. 
+// Return the index of the target value as Some(index) if found, otherwise return None. 
+// Requirements:
+// • Use Option<usize> as the return type. Method/Function Information:
+// • Use iter().enumerate() to iterate over the vector with indices.
 
+
+fn find_index(vec: &Vec<i32>, target: i32) -> Option<usize> {
+    for (index, &value) in vec.iter().enumerate() {
+        if value == target {
+            return Some(index);
+        }
+    }
+    None
+}
 
 
 fn main() {
@@ -97,6 +113,7 @@ fn main() {
     println!("Price of {} after discount: ${}", product.name, product.price);
     */
     // Test the swap function : Exercice 3
+    /*
     let x = 10;
     let y = 20;
 
@@ -108,5 +125,13 @@ fn main() {
 
     let (new_a, new_b) = swap(a, b);
     println!("new_a = {}, new_b = {}", new_a, new_b);
+    */
+    // Test the find_index function : Exercice 4
 
-}
+    let numbers = vec![10, 20, 30, 40, 50, 60];
+    let target = 60;
+    match find_index(&numbers, target) {
+        Some(index) => println!("Found {} at index {}", target, index),
+        None => println!("{} not found in the vector", target),
+    }
+}   
