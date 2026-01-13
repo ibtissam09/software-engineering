@@ -33,6 +33,40 @@ fn longest_common_suffix<'a>(s1: &'a str, s2: &'a str) -> &'a str {
     }
 }
 
+/// Exercise 2: Structs
+/// Objective: Implement a struct and associated methods. 
+/// Task: Define a struct Product with fields name, price, and stock. Implement a method 
+/// apply_discount that reduces the price by a given percentage. 
+/// Requirements:
+/// • Use an associated function to create a new Product instance.
+/// • Implement the apply_discount method. Method/Function Information:
+/// • Use f64 for the price to handle decimal values.
+/// • Use self.price *= (1.0 - discount) to apply the discount.
+
+struct Product {
+    name: String,
+    price: f64,
+    stock: u32,
+}
+
+impl Product {
+    fn new(name: &str, price: f64, stock: u32) -> Self {
+        Product {
+            name: name.to_string(),
+            price,
+            stock,
+        }
+    }
+
+    fn apply_discount(&mut self, discount: f64) {
+        if discount >= 0.0 && discount <= 1.0 {
+            self.price *= 1.0 - discount;
+        }
+    }
+}
+
+
+
 
 fn main() {
     println!("Hello, world!");
@@ -40,5 +74,12 @@ fn main() {
     // let str1 = "Runner";
     // let str2 = "Manner";
     // let suffix = longest_common_suffix("Runner", "Manner");
-    // println!("Longest common suffix between '{}' and '{}' is '{}'", "Runner", "Manner", suffix);        
+    // println!("Longest common suffix between '{}' and '{}' is '{}'", "Runner", "Manner", suffix);  
+
+    // Test the Product struct and apply_discount method : Exercice 2
+    let mut product = Product::new("Laptop", 1500.0, 10);
+    println!("Original price of {}: ${}", product.name, product.price);
+    product.apply_discount(0.1); // Apply a 10% discount
+    println!("Price of {} after discount: ${}", product.name, product.price);
+          
 }
