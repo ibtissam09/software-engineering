@@ -1,1 +1,1 @@
-/workspaces/software-engineering/EXERCICES_02/target/debug/EXERCICES_02: /workspaces/software-engineering/EXERCICES_02/src/main.rs
+/workspaces/software-engineering/EXERCICES_02/target/debug/EXERCICES_02: /workspaces/software-engineering/EXERCICES_02/src/financial_portfolio_analysis.rs /workspaces/software-engineering/EXERCICES_02/src/main.rs

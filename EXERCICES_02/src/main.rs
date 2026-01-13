@@ -1,3 +1,7 @@
+mod financial_portfolio_analysis;
+
+use financial_portfolio_analysis::*;
+
 // Exercise 1: Lifetime
 // Objective: Practice using lifetime annotations to ensure references remain valid. 
 // Task: Write a function longest_common_suffix that takes two string slices and returns 
@@ -113,6 +117,34 @@ fn safe_sqrt(x: f64) -> Result<f64, String> {
     }
 }
 
+
+/// Exercise: Financial Portfolio Analysis
+/// Objective: Use iterators and data structures to analyze a financial portfolio. 
+/// Calculate the total value, diversification score, and identify high-risk assets.
+/// Task: You are given a dataset of financial assets in a portfolio. Each asset 
+/// includes a ticker symbol, quantity, price per unit, and risk level (low, medium, 
+/// high). Your task is to:
+/// 1. Calculate the total value of the portfolio.
+/// 2. Calculate a diversification score (number of unique asset classes).
+/// 3. Identify assets with a "high" risk level.
+/// 4. Filter out assets with a value below a specified threshold (e.g., 1000.0).
+/// Requirements:
+/// • Use HashMap to aggregate the total value by asset class.
+/// • Use iterators (map, filter, fold) to process the data.
+/// • Choose between HashMap or BTreeMap for aggregation.
+/// Output :
+/// Total portfolio value: 12700.00
+/// Diversification score (unique assets): 4
+/// High-risk assets: [Asset { ticker: "TSLA", quantity: 5, price: 700.0, risk: High }, Asset {
+/// ticker: "NVDA", quantity: 4, price: 200.0, risk: High }]
+/// Assets with value >= 1000.0: [Asset { ticker: "TSLA", quantity: 5, price: 700.0, risk: High },
+/// Asset { ticker: "AMZN", quantity: 2, price: 3000.0, risk: Medium }, Asset { ticker: "GOOGL",
+/// quantity: 3, price: 2500.0, risk: Medium }
+
+
+
+
+
 fn main() {
     println!("Hello, world!");
     // Test the longest_common_suffix function : Exercice 1
@@ -152,10 +184,20 @@ fn main() {
     // }
     // Test the safe_sqrt function : Exercice 5
     
-    let number = 9.0;
-    match safe_sqrt(number) {
-        Ok(result) => println!("The square root of {} is {}", number, result),
-        Err(e) => println!("Error: {}", e), 
-    }
-    
+    //let number = 9.0;
+    // match safe_sqrt(number) {
+    //     Ok(result) => println!("The square root of {} is {}", number, result),
+    //     Err(e) => println!("Error: {}", e), 
+    // }
+    // Test the financial portfolio analysis functions : Exercice 6
+    let assets = portfolio();
+    let total = total_value(&assets);
+    let diversification = diversification_by_risk(&assets);
+    let diversification_score = diversification_score(&diversification);
+    let high_risk = high_risk_assets(&assets);
+    let filtered_assets = assets_above_threshold(&assets, 1000.0);
+    println!("Total portfolio value: {:.2}", total);
+    println!("Diversification score (unique assets): {}", diversification_score);
+    println!("High-risk assets: {:?}", high_risk);
+    println!("Assets with value >= 1000.0: {:?}", filtered_assets);
 }   
